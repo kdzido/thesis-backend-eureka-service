@@ -28,6 +28,7 @@ group 'pl.pja.13868.news'
 version '0.1.0'
 
 repositories {
+    // TODO own repo (cloud | private)
     mavenCentral()
 }
 
@@ -72,7 +73,7 @@ task buildDockerImage(type: DockerBuildImage) {
     dependsOn copyDockerFiles
     inputDir = project.file("$buildDir/dockerfile/Dockerfile").parentFile
     // TODO tag with build number
-    tag = 'kdzido/eurekaserver:latest'
+    tag = 'kdzido/eurekaservice:latest'
 }
 
 // TODO pushDockerImage ??
