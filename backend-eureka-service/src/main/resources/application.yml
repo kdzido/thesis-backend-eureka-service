@@ -15,4 +15,4 @@ logging:
   level:
     com.netflix: WARN
     org.springframework.web: WARN
-    com.kdzido.thesis: DEBUG
+    com.kdzido.thesis.eureka: DEBUG
