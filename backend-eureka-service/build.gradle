@@ -50,8 +50,22 @@ dependencies {
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
+task createBuildInfoFile << {
+    def buildInfo = new File("$buildDir/build-info.properties")
+    def properties = new Properties()
+    properties.setProperty("version", project.version.toString())
+//    properties.setProperty("timestamp", project.buildTimestamp) // TODO timestamp
+    properties.store(buildInfo.newWriter(), null)
+}
+
 jar {
+    dependsOn createBuildInfoFile
     baseName = 'eureka-service'
+
+    from(buildDir) {
+        include 'build-info.properties'
+        into('META-INF/')
+    }
 }
 
 task copyJars(dependsOn: jar, type: Copy) {
@@ -76,6 +90,8 @@ task buildDockerImage(type: DockerBuildImage) {
     // TODO tag with build number
     tag = 'kdzido/thesis-eurekaservice:latest'
 }
+
+// TODO publish to artifactory
 
 // TODO pushDockerImage ??
 

@@ -12,7 +12,8 @@ pipeline {
         }
         stage('Acceptance Stage') {
             steps {
-                sh './gradlew clean build'
+//                input "Proceed?"
+                echo 'TODO Acceptance Stage'
             }
         }
     }
