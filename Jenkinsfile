@@ -14,9 +14,10 @@ pipeline {
                 echo "JOB_NAME: ${env.JOB_NAME}"
                 echo "BUILD_TAG: ${env.BUILD_TAG}"
                 echo "JENKINS_URL: ${env.JENKINS_URL}"
+                echo "PIPELINE_BUILD_ID: ${env.PIPELINE_BUILD_ID}"
                 echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
 
-                sh './gradlew clean build'
+                sh './gradlew clean build buildDockerImage'
             }
         }
         stage('Acceptance Stage') {
