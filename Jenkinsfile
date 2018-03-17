@@ -1,7 +1,7 @@
 pipeline {
     agent { node { label 'docker' } }
 
-    env {
+    environment {
         PIPELINE_BUILD_ID = "${BUILD_TAG}"
     }
 
