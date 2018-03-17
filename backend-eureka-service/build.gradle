@@ -81,14 +81,13 @@ task copyDockerFiles(dependsOn: [copyJars], type: Copy) {
     filter(ReplaceTokens, tokens: [springBootJar: springBootJar])
 }
 
-// TODO BUILD_NAME env var
-
 // TODO use DockerApplication with Boot
 task buildDockerImage(type: DockerBuildImage) {
     dependsOn copyDockerFiles
     inputDir = project.file("$buildDir/dockerfile/Dockerfile").parentFile
-    // TODO tag with build number
-    tag = 'kdzido/thesis-eurekaservice:latest'
+
+    String dockerTag = System.env.PIPELINE_BUILD_ID ?: "snapshot"
+    tag = "kdzido/thesis-eurekaservice:${dockerTag}"
 }
 
 // TODO publish to artifactory
