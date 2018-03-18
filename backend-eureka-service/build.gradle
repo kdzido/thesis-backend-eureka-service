@@ -85,14 +85,11 @@ task copyDockerFiles(dependsOn: [copyJars], type: Copy) {
 task buildDockerImage(type: DockerBuildImage) {
     dependsOn copyDockerFiles
     inputDir = project.file("$buildDir/dockerfile/Dockerfile").parentFile
+    // TODO include build-info.properties
 
     String dockerTag = System.env.PIPELINE_BUILD_ID ?: "snapshot"
     tag = "kdzido/thesis-eurekaservice:${dockerTag}"
 }
 
-// TODO publish to artifactory
-
-// TODO pushDockerImage ??
-
-//build.dependsOn buildImage
-
+// TODO publish to artifactory?
+// TODO pushDockerImage?
