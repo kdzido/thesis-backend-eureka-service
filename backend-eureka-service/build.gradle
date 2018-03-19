@@ -28,6 +28,7 @@ group 'pl.pja.13868.news'
 version '0.1.1'
 
 repositories {
+    mavenLocal()
     // TODO own repo (cloud | private)
     mavenCentral()
 }
