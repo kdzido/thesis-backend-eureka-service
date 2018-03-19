@@ -89,8 +89,6 @@ task buildDockerImage(type: DockerBuildImage) {
 
     String dockerTag = System.env.PIPELINE_BUILD_ID ?: "snapshot"
     tag = "kdzido/thesis-eurekaservice:${dockerTag}"
-
-    Thread.sleep(60  * 60 * 1000)
 }
 
 // TODO publish to artifactory?
