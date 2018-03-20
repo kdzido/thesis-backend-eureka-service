@@ -3,6 +3,10 @@ pipeline {
 
     environment {
         PIPELINE_BUILD_ID = "${BUILD_TAG}"
+                        withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
+                            DOCKERHUB_USER = "${env.dockerHubUser}"
+                             DOCKERHUB_PASSWORD= "${env.dockerHubPassword}"
+                        }
     }
 
     stages {
@@ -19,10 +23,6 @@ pipeline {
 
                 sh './gradlew clean build buildDockerImage'
 
-                withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
-                    sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-                    sh 'docker push qu4rk/thesis-eurekaservice:latest'
-                }
             }
         }
         stage('Acceptance Stage') {
