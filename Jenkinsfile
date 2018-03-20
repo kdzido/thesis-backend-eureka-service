@@ -3,8 +3,6 @@ pipeline {
 
     environment {
         PIPELINE_BUILD_ID = "${BUILD_TAG}"
-        DOCKERHUB_USER = credencials(")
-        DOCKERHUB_PASSWORD = credencials(")
     }
 
     stages {
