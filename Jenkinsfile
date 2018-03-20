@@ -3,8 +3,9 @@ pipeline {
 
     environment {
         PIPELINE_BUILD_ID = "${BUILD_TAG}"
-        DOCKERHUB_USER = credentials("dockerhub")
-        DOCKERHUB_PASSWORD = credentials("dockerhub")
+        DOCKERHUB_CREDS = credentials("dockerhub")
+        // implicit DOCKERHUB_CREDS_USR
+        // implicit DOCKERHUB_CREDS_PSW
     }
 
     stages {
@@ -19,8 +20,9 @@ pipeline {
                 echo "PIPELINE_BUILD_ID: ${env.PIPELINE_BUILD_ID}"
                 echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
 
-                echo "dockerhub user: ${env.DOCKERHUB_USER}"
-                echo "dockerhub pass: ${env.DOCKERHUB_PASSWORD}"
+                echo "dockerhub creds: ${env.DOCKERHUB_CREDS}"
+                echo "dockerhub user: ${env.DOCKERHUB_CREDS_USR}"
+                echo "dockerhub pass: ${env.DOCKERHUB_CREDS_PSW}"
 
                 sh './gradlew clean build buildDockerImage'
 
