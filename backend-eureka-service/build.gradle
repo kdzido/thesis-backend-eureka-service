@@ -93,4 +93,3 @@ task buildDockerImage(type: DockerBuildImage) {
 }
 
 // TODO publish to artifactory?
-// TODO pushDockerImage?
