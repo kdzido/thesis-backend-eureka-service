@@ -51,16 +51,16 @@ dependencies {
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
-task createBuildInfoFile << {
-    def buildInfo = new File("$buildDir/build-info.properties")
-    def properties = new Properties()
-    properties.setProperty("version", project.version.toString())
-//    properties.setProperty("timestamp", project.buildTimestamp) // TODO timestamp
-    properties.store(buildInfo.newWriter(), null)
-}
+//task createBuildInfoFile << {
+//    def buildInfo = new File("$buildDir/build-info.properties")
+//    def properties = new Properties()
+//    properties.setProperty("version", project.version.toString())
+////    properties.setProperty("timestamp", project.buildTimestamp) // TODO timestamp
+//    properties.store(buildInfo.newWriter(), null)
+//}
 
 jar {
-    dependsOn createBuildInfoFile
+//    dependsOn createBuildInfoFile
     baseName = 'eureka-service'
 
     from(buildDir) {
