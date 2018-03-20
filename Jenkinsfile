@@ -23,6 +23,7 @@ pipeline {
                     sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
                     sh 'docker push qu4rk/thesis-eurekaservice:latest'
                 }
+            }
         }
         stage('Acceptance Stage') {
             steps {
