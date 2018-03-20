@@ -82,6 +82,13 @@ task copyDockerFiles(dependsOn: [copyJars], type: Copy) {
     filter(ReplaceTokens, tokens: [springBootJar: springBootJar])
 }
 
+docker {
+    registryCredentials {
+        username = System.env.DOCKERHUB_CREDS_USR
+        password = System.env.DOCKERHUB_CREDS_PSW
+    }
+}
+
 // TODO use DockerApplication with Boot
 task buildDockerImage(type: DockerBuildImage) {
     dependsOn copyDockerFiles
@@ -89,7 +96,13 @@ task buildDockerImage(type: DockerBuildImage) {
     // TODO include build-info.properties
 
     String dockerTag = System.env.PIPELINE_BUILD_ID ?: "snapshot"
-    tag = "kdzido/thesis-eurekaservice:${dockerTag}"
+    tag = "qu4rk/thesis-eurekaservice:${dockerTag}"
 }
+
+task pushDockerImage(type: DockerPushImage) {
+    dependsOn buildDockerImage
+    imageName = "qu4rk/thesis-eurekaservice"
+}
+
 
 // TODO publish to artifactory?
