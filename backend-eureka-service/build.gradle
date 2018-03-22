@@ -87,10 +87,8 @@ task copyDockerFiles(dependsOn: [copyJars], type: Copy) {
 docker {
     registryCredentials {
 //        url = 'https://index.docker.io/v1/'
-//        username = 'qu4rk'
-        username = 'qu4rk'
-//        password = System.env.DOCKERHUB_CREDS_PSW
-        password = 'H&,89@>7:KEU'
+        username = System.env.DOCKERHUB_CREDS_USR
+        password = System.env.DOCKERHUB_CREDS_PSW
         email = "xtofek@gmail.com"
     }
 }
@@ -104,13 +102,14 @@ task buildDockerImage(type: DockerBuildImage) {
     String dockerTag = System.env.PIPELINE_BUILD_ID ?: "snapshot"
 //    tag = "qu4rk/thesis-eurekaservice:${dockerTag}"
 //    tag = "qu4rk/thesis-eurekaservice"
-    tag = "${DockerRegistryCredentials.DEFAULT_URL}qu4rk/thesis-eurekaservice:snapshot"
+//    tag = "${DockerRegistryCredentials.DEFAULT_URL}qu4rk/thesis-eurekaservice:snapshot"
+    tag = "qu4rk/thesis-eurekaservice:${dockerTag}"
 }
 
 task pushDockerImage(type: DockerPushImage) {
     dependsOn buildDockerImage
 
-    imageName = "${DockerRegistryCredentials.DEFAULT_URL}qu4rk/thesis-eurekaservice"
+    imageName = "qu4rk/thesis-eurekaservice"
 //    tag = "snapshot"
 }
 
