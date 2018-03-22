@@ -19,6 +19,7 @@ pipeline {
                 echo "JENKINS_URL: ${env.JENKINS_URL}"
                 echo "PIPELINE_BUILD_ID: ${env.PIPELINE_BUILD_ID}"
                 echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
+                echo "Artifactory URI ${env.ARTIFACTORY_URI}"
 
                 echo "dockerhub creds: ${env.DOCKERHUB_CREDS}"
                 echo "dockerhub user: ${env.DOCKERHUB_CREDS_USR}"

@@ -21,6 +21,7 @@ apply plugin: 'com.bmuschko.docker-remote-api'
 import org.apache.tools.ant.filters.*
 import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
 import com.bmuschko.gradle.docker.tasks.image.DockerPushImage
+import com.bmuschko.gradle.docker.DockerRegistryCredentials
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -85,8 +86,12 @@ task copyDockerFiles(dependsOn: [copyJars], type: Copy) {
 
 docker {
     registryCredentials {
-        username = System.env.DOCKERHUB_CREDS_USR
-        password = System.env.DOCKERHUB_CREDS_PSW
+//        url = 'https://index.docker.io/v1/'
+//        username = 'qu4rk'
+        username = 'qu4rk'
+//        password = System.env.DOCKERHUB_CREDS_PSW
+        password = 'H&,89@>7:KEU'
+        email = "xtofek@gmail.com"
     }
 }
 
@@ -97,12 +102,16 @@ task buildDockerImage(type: DockerBuildImage) {
     // TODO include build-info.properties
 
     String dockerTag = System.env.PIPELINE_BUILD_ID ?: "snapshot"
-    tag = "qu4rk/thesis-eurekaservice:${dockerTag}"
+//    tag = "qu4rk/thesis-eurekaservice:${dockerTag}"
+//    tag = "qu4rk/thesis-eurekaservice"
+    tag = "${DockerRegistryCredentials.DEFAULT_URL}qu4rk/thesis-eurekaservice:snapshot"
 }
 
 task pushDockerImage(type: DockerPushImage) {
     dependsOn buildDockerImage
-    imageName = "qu4rk/thesis-eurekaservice"
+
+    imageName = "${DockerRegistryCredentials.DEFAULT_URL}qu4rk/thesis-eurekaservice"
+//    tag = "snapshot"
 }
 
 
