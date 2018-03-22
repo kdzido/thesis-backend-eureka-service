@@ -27,7 +27,7 @@ pipeline {
                 echo "dockerhub pass: ${env.DOCKERHUB_CREDS_PSW}"
 
                 sh './display-env.sh'
-#                sh './gradlew clean build buildDockerImage'
+//                sh './gradlew clean build buildDockerImage'
 
 
 
