@@ -6,7 +6,7 @@ pipeline {
         DOCKERHUB_CREDS = credentials("dockerhub")
         // implicit DOCKERHUB_CREDS_USR
         // implicit DOCKERHUB_CREDS_PSW
-        ARTIFACTORY_URI= 'http:\/\/192.168.0.20:8071/artifactory'
+        ARTIFACTORY_URI= 'http://192.168.0.20:8071/artifactory'
     }
 
     stages {
