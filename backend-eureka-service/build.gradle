@@ -3,7 +3,7 @@ buildscript {
         springBootVersion = '1.5.10.RELEASE'
     }
     repositories {
-        mavenCentral()
+        maven { url 'http://artifactory:8071/artifactory/libs-release' }
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
