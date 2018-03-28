@@ -1,5 +1,11 @@
 pipeline {
-    agent { node { label 'docker' } }
+    agent {
+        docker {
+            image 'jenkins/ssh-slave'
+            label 'docker-enabled'
+        }
+        // node { label 'docker' }
+    }
 
     environment {
         PIPELINE_BUILD_ID = "${BUILD_TAG}"
