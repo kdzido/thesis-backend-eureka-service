@@ -40,10 +40,10 @@ pipeline {
                 echo 'TODO Acceptance Stage'
             }
         }
-        stage('Deploy to prod') {
+        stage('Deploy to Production') {
             steps {
 //                input "Proceed?"
-                echo 'TODO deploy to production'
+                echo 'TODO deploy to Production'
             }
         }
 
