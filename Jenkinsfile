@@ -1,4 +1,4 @@
-node {
+node ('docker-enabled') {
     def app
 
     stage('Clone repository') {
