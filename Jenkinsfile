@@ -8,7 +8,7 @@ node ('docker-enabled') {
     }
 
     stage('Commit Stage') {
-        sh './gradlew clean build'
+        sh './gradlew clean build buildDockerImage'
     }
 
     stage('Build image') {
