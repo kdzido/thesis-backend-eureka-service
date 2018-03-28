@@ -7,6 +7,10 @@ node ('docker-enabled') {
         checkout scm
     }
 
+    stage('Commit Stage') {
+        sh './gradlew clean build'
+    }
+
     stage('Build image') {
         /* This builds the actual image; synonymous to docker build on the command line */
         app = docker.build("qu4rk/hellonode")
