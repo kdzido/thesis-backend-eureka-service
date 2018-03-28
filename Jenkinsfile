@@ -9,7 +9,7 @@ pipeline {
     }
 
     environment {
-        PIPELINE_BUILD_ID = "${BUILD_TAG}"
+        PIPELINE_BUILD_ID = "${GIT_BRANCH}-${BUILD_NUMBER}"
         DOCKERHUB_CREDS = credentials("dockerhub")
         // implicit DOCKERHUB_CREDS_USR
         // implicit DOCKERHUB_CREDS_PSW

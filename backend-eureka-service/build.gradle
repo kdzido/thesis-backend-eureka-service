@@ -21,14 +21,12 @@ apply plugin: 'com.bmuschko.docker-remote-api'
 
 import org.apache.tools.ant.filters.*
 import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
-import com.bmuschko.gradle.docker.tasks.image.DockerPushImage
-import com.bmuschko.gradle.docker.DockerRegistryCredentials
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 group 'pl.pja.13868.news'
-version '0.1.1'
+version '0.2.0'
 
 repositories {
     mavenLocal()
@@ -101,18 +99,7 @@ task buildDockerImage(type: DockerBuildImage) {
     // TODO include build-info.properties
 
     String dockerTag = System.env.PIPELINE_BUILD_ID ?: "snapshot"
-//    tag = "qu4rk/thesis-eurekaservice:${dockerTag}"
-//    tag = "qu4rk/thesis-eurekaservice"
-//    tag = "${DockerRegistryCredentials.DEFAULT_URL}qu4rk/thesis-eurekaservice:snapshot"
     tag = "qu4rk/thesis-eurekaservice:${dockerTag}"
 }
-
-task pushDockerImage(type: DockerPushImage) {
-    dependsOn buildDockerImage
-
-    imageName = "qu4rk/thesis-eurekaservice"
-//    tag = "snapshot"
-}
-
 
 // TODO publish to artifactory?
