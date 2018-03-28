@@ -3,7 +3,7 @@ pipeline {
         docker {
             image 'jenkins/ssh-slave'
             label 'docker-enabled'
-            args '-v /var/run/docker.sock:/var/run/docker.sock -v $HOME/jenkins_remote_root/.gradle/wrapper/dists:/root/.gradle/wrapper/dists -v $HOME/.m2:/root/.m2
+            args '-v /var/run/docker.sock:/var/run/docker.sock -v $HOME/jenkins_remote_root/.gradle/wrapper/dists:/root/.gradle/wrapper/dists -v $HOME/.m2:/root/.m2'
         }
         // node { label 'docker' }
     }
