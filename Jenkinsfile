@@ -1,11 +1,11 @@
 pipeline {
     agent {
-        docker {
-            image 'jenkins/ssh-slave'
-            label 'docker-enabled'
-            args '-v /var/run/docker.sock:/var/run/docker.sock -v $HOME/jenkins_remote_root/.gradle/wrapper/dists:/root/.gradle/wrapper/dists -v $HOME/.m2:/root/.m2'
-        }
-        // node { label 'docker' }
+//        docker {
+//            image 'jenkins/ssh-slave'
+//            label 'docker-enabled'
+//            args '-v /var/run/docker.sock:/var/run/docker.sock -v $HOME/jenkins_remote_root/.gradle/wrapper/dists:/root/.gradle/wrapper/dists -v $HOME/.m2:/root/.m2'
+//        }
+        node { label 'docker-enabled' }
     }
 
     environment {
@@ -33,7 +33,6 @@ pipeline {
                 echo "dockerhub user: ${env.DOCKERHUB_CREDS_USR}"
                 echo "dockerhub pass: ${env.DOCKERHUB_CREDS_PSW}"
 
-                // sh 'echo `ping -c 1 artifactory `'
                 sh './display-env.sh'
                 sh './gradlew clean build buildDockerImage'
 
