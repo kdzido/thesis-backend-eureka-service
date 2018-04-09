@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: eurekaservice
+
+# TODO remove
+management.security.enabled: false
+
