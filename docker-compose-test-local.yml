@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+  app:
+    build: .
+#    image: qu4rk/thesis-eurekaservice
+    image: thesis-eurekaservice
+
+  unit:
+    image: openjdk:8u162-jdk
+    volumes:
+      - .:/usr/src/myapp
+#      - /tmp/go:/go
+    working_dir: /usr/src/myapp
+    command: bash -c "./gradlew clean build buildDockerImage"
