@@ -12,4 +12,4 @@ services:
       - .:/usr/src/myapp
 #      - /tmp/go:/go
     working_dir: /usr/src/myapp
-    command: bash -c "./gradlew clean build buildDockerImage"
+    command: bash -c "./gradlew clean build"
