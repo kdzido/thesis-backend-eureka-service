@@ -9,7 +9,6 @@ services:
   unit:
     image: openjdk:8u162-jdk
     volumes:
-      - .:/usr/src/myapp
-#      - /tmp/go:/go
-    working_dir: /usr/src/myapp
+      - .:/appsrc
+    working_dir: /appsrc
     command: bash -c "./gradlew clean build"
