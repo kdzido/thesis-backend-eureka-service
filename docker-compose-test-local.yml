@@ -11,7 +11,7 @@ services:
 
   app:
     build: .
-    build: backend-eureka-service/build/dockerfile/
+#    build: backend-eureka-service/build/dockerfile/
 #    image: qu4rk/thesis-eurekaservice
     image: thesis-eurekaservice
 
