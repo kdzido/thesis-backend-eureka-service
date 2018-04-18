@@ -15,7 +15,7 @@ pipeline {
             steps {
                 withEnv(["COMPOSE_FILE=docker-compose-test-local.yml"]) {
                     sh 'docker-compose run --rm unit'
-                    sh 'docker-compose build app'
+//                    sh 'docker-compose build app'
                 }
             }
         }
