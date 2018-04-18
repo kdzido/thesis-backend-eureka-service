@@ -10,5 +10,6 @@ services:
     image: openjdk:8u162-jdk
     volumes:
       - .:/appsrc
+      - ./rootGradle:/root/.gradle
     working_dir: /appsrc
     command: bash -c "./gradlew clean build"
