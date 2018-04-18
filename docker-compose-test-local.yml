@@ -12,4 +12,4 @@ services:
       - .:/appsrc
       - ./rootGradle:/root/.gradle
     working_dir: /appsrc
-    command: bash -c "./gradlew clean build"
+    command: bash -c "./gradlew clean build copyDockerFiles"
