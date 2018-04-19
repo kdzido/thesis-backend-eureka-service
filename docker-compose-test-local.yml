@@ -21,6 +21,7 @@ services:
       PROFILE: "peer1"
     ports:
       - "8761:8761"
+
   eurekapeer2:
     image: thesis-eurekaservice:snapshot
     environment:
