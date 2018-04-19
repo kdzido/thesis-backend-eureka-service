@@ -13,5 +13,18 @@ services:
     build:
       context: ./backend-eureka-service/build/dockerfile/
     image: thesis-eurekaservice:snapshot
-    # :latest
+
+# Staging
+  eurekapeer1:
+    image: thesis-eurekaservice:snapshot
+    environment:
+      PROFILE: "peer1"
+    ports:
+      - "8761:8761"
+  eurekapeer2:
+    image: thesis-eurekaservice:snapshot
+    environment:
+      PROFILE: "peer2"
+    ports:
+      - "8762:8761"
 

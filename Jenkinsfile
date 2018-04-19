@@ -19,6 +19,15 @@ pipeline {
                 }
             }
         }
+        stage('Staging') {
+            steps {
+                withEnv(["COMPOSE_FILE=docker-compose-test-local.yml"]) {
+                    sh 'docker-compose run up -d eurekapeer1'
+                    sh 'docker-compose run up -d eurekapeer2'
+                    sh 'sleep 60'
+                }
+            }
+        }
     }
 
 }
