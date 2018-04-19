@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 
 services:
   unit:
@@ -10,7 +10,8 @@ services:
     command: bash -c "./gradlew clean build copyDockerFiles"
 
   app:
-    build: .
+    build:
+      context: ./backend-eureka-service/build/dockerfile/
 #    build: backend-eureka-service/build/dockerfile/
 #    image: qu4rk/thesis-eurekaservice
     image: thesis-eurekaservice
