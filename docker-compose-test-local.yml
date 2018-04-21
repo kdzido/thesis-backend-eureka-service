@@ -9,10 +9,10 @@ services:
     working_dir: /appsrc
     command: bash -c "./gradlew clean build copyDockerFiles"
 
-#  app:
-#    build:
-#      context: ./backend-eureka-service/build/dockerfile/
-#    image: thesis-eurekaservice:snapshot
+  app:
+    build:
+      context: ./backend-eureka-service/build/dockerfile/
+    image: thesis-eurekaservice:snapshot
 
 # Staging
   eurekapeer1:
