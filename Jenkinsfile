@@ -20,25 +20,25 @@ pipeline {
                 }
             }
         }
-//        stage('Staging') {
-//            steps {
-//                withEnv(["COMPOSE_FILE=docker-compose-test-local.yml"]) {
-//                    sh 'docker-compose up -d eurekapeer1'
-//                    sh 'docker-compose up -d eurekapeer2'
+        stage('Staging') {
+            steps {
+                withEnv(["COMPOSE_FILE=docker-compose-test-local.yml"]) {
+                    sh 'docker-compose up -d eurekapeer1'
+                    sh 'docker-compose up -d eurekapeer2'
 //                    sh 'sleep 180'
-//                    // TODO test peers are connected
-//                }
-//            }
-//        }
-//
-//        stage("Publish") { // Local Docker registry
-//            steps {
-//                sh "docker tag thesis-eurekaservice:snapshot localhost:5000/thesis-eurekaservice"
-//                sh "docker tag thesis-eurekaservice:snapshot localhost:5000/thesis-eurekaservice:${env.BUILD_NUMBER}"
-//                sh "docker push localhost:5000/thesis-eurekaservice"
-//                sh "docker push localhost:5000/thesis-eurekaservice:${env.BUILD_NUMBER}"
-//            }
-//        }
+                    // TODO test peers are connected
+                }
+            }
+        }
+
+        stage("Publish") { // Local Docker registry
+            steps {
+                sh "docker tag thesis-eurekaservice:snapshot localhost:5000/thesis-eurekaservice"
+                sh "docker tag thesis-eurekaservice:snapshot localhost:5000/thesis-eurekaservice:${env.BUILD_NUMBER}"
+                sh "docker push localhost:5000/thesis-eurekaservice"
+                sh "docker push localhost:5000/thesis-eurekaservice:${env.BUILD_NUMBER}"
+            }
+        }
     }
 
     post {
