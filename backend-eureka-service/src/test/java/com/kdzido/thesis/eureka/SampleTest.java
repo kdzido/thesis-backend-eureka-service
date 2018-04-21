@@ -8,6 +8,6 @@ public class SampleTest {
 
     @Test
     public void testTruth() {
-        assertTrue(true, "true");
+        assertTrue(false, "true does not hold in this system");
     }
 }
