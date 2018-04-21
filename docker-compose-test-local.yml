@@ -9,9 +9,6 @@ services:
     working_dir: /appsrc
     command: bash -c "./gradlew clean build copyDockerFiles"
 
-# TODO wrong Dockerfile needs to exist before docker-compose is called !!!
-# TODO wrong Dockerfile needs to exist before docker-compose is called !!!
-# TODO wrong Dockerfile needs to exist before docker-compose is called !!!
   app:
     build:
       context: ./backend-eureka-service/build/dockerfile/
