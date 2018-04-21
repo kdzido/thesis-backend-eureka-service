@@ -30,3 +30,13 @@ services:
     ports:
       - "8762:8761"
 
+  staging:
+    image: openjdk:8u162-jdk
+    volumes:
+      - .:/appsrc
+      - ./rootGradle:/root/.gradle
+    environment:
+      - EUREKAPEER_1 = eurekapeer1
+      - EUREKAPEER_2 = eurekapeer2
+    working_dir: /appsrc
+    command: bash -c "./gradlew integTest"

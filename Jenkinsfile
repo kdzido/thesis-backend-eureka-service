@@ -13,7 +13,7 @@ pipeline {
     stages {
         stage('Unit') {
             steps {
-                withEnv(["COMPOSE_FILE=docker-compose-test-local.yml"]) {
+                withEnv(["COMPOSE_FILE=docker-compose-test.yml"]) {
                     sh 'mkdir -p backend-eureka-service/build/dockerfile'   // dir must exist for docker-compose
                     sh 'docker-compose run --rm unit'
                     sh 'docker-compose build app'
@@ -22,9 +22,10 @@ pipeline {
         }
         stage('Staging') {
             steps {
-                withEnv(["COMPOSE_FILE=docker-compose-test-local.yml"]) {
+                withEnv(["COMPOSE_FILE=docker-compose-test.yml"]) {
                     sh 'docker-compose up -d eurekapeer1'
                     sh 'docker-compose up -d eurekapeer2'
+                    sh 'docker-compose run --rm staging'
 //                    sh 'sleep 180'
                     // TODO test peers are connected
                 }
@@ -44,7 +45,7 @@ pipeline {
     post {
         always {
             // TODO handle non-existing backend-eureka-service/build/dockerfile
-            withEnv(["COMPOSE_FILE=docker-compose-test-local.yml"]) {
+            withEnv(["COMPOSE_FILE=docker-compose-test.yml"]) {
                 sh "docker-compose down"
             }
         }

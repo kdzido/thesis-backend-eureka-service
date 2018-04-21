@@ -15,6 +15,7 @@ buildscript {
 
 apply plugin: 'idea'
 apply plugin: 'java'
+apply plugin: 'groovy'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'com.bmuschko.docker-remote-api'
@@ -34,6 +35,22 @@ repositories {
     mavenCentral()
 }
 
+configurations {
+    integTestCompile.extendsFrom testCompile
+    integTestRuntime.extendsFrom testRuntime
+}
+
+sourceSets {
+    integTest {
+        java {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+            srcDir file('src/integTest/java')
+            srcDir file('src/integTest/groovy')
+        }
+    }
+}
+
 dependencyManagement {
     imports {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:Edgware.SR2"
@@ -50,7 +67,23 @@ dependencies {
     testCompile("cglib:cglib-nodep:${cglibVersion}")
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
+
+    integTestCompile sourceSets.main.output
+    integTestCompile("junit:junit:${junitVersion}")
+    integTestCompile("cglib:cglib-nodep:${cglibVersion}")
+    integTestCompile "org.codehaus.groovy:groovy-all:${groovyVersion}"
+    integTestCompile "org.spockframework:spock-core:${spockVersion}"
+
 }
+
+task integTest(type: Test) {
+    testClassesDirs = sourceSets.integTest.output.classesDirs
+    classpath = sourceSets.integTest.runtimeClasspath
+    description ='Integration tests'
+    group = 'verification'
+}
+
+integTest.mustRunAfter test
 
 //task createBuildInfoFile << {
 //    def buildInfo = new File("$buildDir/build-info.properties")
