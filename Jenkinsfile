@@ -14,7 +14,7 @@ pipeline {
         stage('Unit') {
             steps {
                 withEnv(["COMPOSE_FILE=docker-compose-test-local.yml"]) {
-                    sh 'pwd'
+                    sh 'mkdir -p backend-eureka-service/build/dockerfile'
                     sh 'docker-compose run --rm unit'
                     sh 'docker-compose build app'
                 }
