@@ -43,6 +43,7 @@ pipeline {
 
     post {
         always {
+            // TODO handle non-existing backend-eureka-service/build/dockerfile
             withEnv(["COMPOSE_FILE=docker-compose-test-local.yml"]) {
                 sh "docker-compose down"
             }
