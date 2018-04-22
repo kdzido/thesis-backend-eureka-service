@@ -22,12 +22,13 @@ class PeerAwareEurekaClusterIntegSpec extends Specification {
         given:
         def peer1 = System.getenv("EUREKASERVICE_URI_1")
         def peer2 = System.getenv("EUREKASERVICE_URI_2")
+
+        expect:
         // TODO pass as quickly as possible
         // TODO pass as quickly as possible
         // TODO pass as quickly as possible
         TimeUnit.SECONDS.sleep(90)
 
-        expect:
         given().when()
                     .accept(ContentType.JSON)
                     .get("$peer1/apps")
@@ -36,14 +37,14 @@ class PeerAwareEurekaClusterIntegSpec extends Specification {
                     .body("applications.application.name", hasItem("EUREKASERVICE"))
                     .body("applications.application.instance.app", hasItems(["EUREKASERVICE", "EUREKASERVICE"]))
 
-//        and:
-//        given().when()
-//                    .accept(ContentType.JSON)
-//                    .get("$peer2/apps")
-//                .then()
-//                    .statusCode(200)
-//                    .body("applications.application.name", hasItem("EUREKASERVICE"))
-//                    .body("applications.application.instance.app", hasItems(["EUREKASERVICE", "EUREKASERVICE"]))
+        and:
+        given().when()
+                    .accept(ContentType.JSON)
+                    .get("$peer2/apps")
+                .then()
+                    .statusCode(200)
+                    .body("applications.application.name", hasItem("EUREKASERVICE"))
+                    .body("applications.application.instance.app", hasItems(["EUREKASERVICE", "EUREKASERVICE"]))
     }
 
 }
