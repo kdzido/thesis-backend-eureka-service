@@ -36,7 +36,7 @@ services:
       - .:/appsrc
       - ./rootGradle:/root/.gradle
     environment:
-      - EUREKAPEER_1 = eurekapeer1
-      - EUREKAPEER_2 = eurekapeer2
+      EUREKASERVICE_URI_1: http://eurekapeer1:8761/eureka"
+      EUREKASERVICE_URI_2: http://eurekapeer2:8762/eureka
     working_dir: /appsrc
     command: bash -c "./gradlew integTest"
