@@ -32,9 +32,9 @@ services:
 
   staging:
     image: openjdk:8u162-jdk
-    depends_on:
-      - eurekapeer1
-      - eurekapeer2
+#    depends_on:
+#      - eurekapeer1
+#      - eurekapeer2
     volumes:
       - .:/appsrc
       - ./rootGradle:/root/.gradle
