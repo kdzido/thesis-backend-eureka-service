@@ -25,8 +25,8 @@ pipeline {
                 withEnv(["COMPOSE_FILE=docker-compose-test.yml"]) {
                     sh 'docker-compose up -d eurekapeer1'
                     sh 'docker-compose up -d eurekapeer2'
+                    sh 'sleep 3600'
                     sh 'docker-compose run --rm staging'
-                    sh 'sleep 360'
                     // TODO test peers are connected
                 }
             }
