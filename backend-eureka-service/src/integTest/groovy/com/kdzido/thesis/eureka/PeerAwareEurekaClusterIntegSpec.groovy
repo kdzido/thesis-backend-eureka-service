@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*
 /**
  * @author krzysztof.dzido@gmail.com
  */
-//@Requires({env['EUREKASERVICE_URI_1'] && env['EUREKASERVICE_URI_2']})
+@Requires({env['EUREKASERVICE_URI_1'] && env['EUREKASERVICE_URI_2']})
 class PeerAwareEurekaClusterIntegSpec extends Specification {
 
     @Timeout(unit=TimeUnit.MINUTES, value=5)
