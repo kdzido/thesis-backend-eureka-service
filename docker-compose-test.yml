@@ -39,7 +39,7 @@ services:
       - .:/appsrc
       - ./rootGradle:/root/.gradle
     environment:
-      EUREKASERVICE_URI_1: http://eurekapeer1:8761/eureka"
-      EUREKASERVICE_URI_2: http://eurekapeer2:8762/eureka
+      - EUREKASERVICE_URI_1=http://eurekapeer1:8761/eureka"
+      - EUREKASERVICE_URI_2=http://eurekapeer2:8762/eureka
     working_dir: /appsrc
     command: bash -c "echo $EUREKASERVICE_URI_1"
