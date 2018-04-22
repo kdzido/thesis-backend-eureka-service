@@ -42,4 +42,4 @@ services:
       EUREKASERVICE_URI_1: http://eurekapeer1:8761/eureka"
       EUREKASERVICE_URI_2: http://eurekapeer2:8762/eureka
     working_dir: /appsrc
-    command: bash -c "echo "uri1: $EUREKASERVICE_URI_1"
+    command: bash -c 'echo "uri1: $EUREKASERVICE_URI_1"'
