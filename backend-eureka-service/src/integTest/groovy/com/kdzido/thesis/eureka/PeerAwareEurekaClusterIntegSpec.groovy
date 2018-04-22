@@ -21,8 +21,8 @@ class PeerAwareEurekaClusterIntegSpec extends Specification {
         def peer1 = System.getenv("EUREKASERVICE_URI_1")
         def peer2 = System.getenv("EUREKASERVICE_URI_2")
 
-//        peer1 = 'http://192.168.99.103:8761/eureka'
-//        peer2 = 'http://192.168.99.103:8762/eureka'
+        peer1 = 'http://192.168.99.103:8761/eureka'
+        peer2 = 'http://192.168.99.103:8762/eureka'
         println "peer1: " + peer1
         println "peer2: " + peer2
 
