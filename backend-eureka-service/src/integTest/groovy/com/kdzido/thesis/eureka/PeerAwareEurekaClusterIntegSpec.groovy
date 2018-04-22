@@ -11,6 +11,9 @@ import static io.restassured.RestAssured.*
 import static io.restassured.matcher.RestAssuredMatchers.*
 import static org.hamcrest.Matchers.*
 
+/**
+ * @author krzysztof.dzido@gmail.com
+ */
 @Requires({env['EUREKASERVICE_URI_1'] && env['EUREKASERVICE_URI_2']})
 class PeerAwareEurekaClusterIntegSpec extends Specification {
 
