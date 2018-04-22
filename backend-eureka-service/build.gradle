@@ -69,10 +69,10 @@ dependencies {
     testCompile('org.springframework.boot:spring-boot-starter-test')
 
     integTestCompile sourceSets.main.output
-    integTestCompile("junit:junit:${junitVersion}")
-    integTestCompile("cglib:cglib-nodep:${cglibVersion}")
+    integTestCompile "cglib:cglib-nodep:${cglibVersion}"
     integTestCompile "org.codehaus.groovy:groovy-all:${groovyVersion}"
     integTestCompile "org.spockframework:spock-core:${spockVersion}"
+    integTestCompile "io.rest-assured:rest-assured:${restAssuredVersion}"
 
 }
 

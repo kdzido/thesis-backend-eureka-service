@@ -26,7 +26,7 @@ pipeline {
                     sh 'docker-compose up -d eurekapeer1'
                     sh 'docker-compose up -d eurekapeer2'
                     sh 'docker-compose run --rm staging'
-//                    sh 'sleep 180'
+                    sh 'sleep 360'
                     // TODO test peers are connected
                 }
             }
