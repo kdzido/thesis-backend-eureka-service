@@ -15,6 +15,17 @@ import static org.hamcrest.Matchers.*
 //@Requires(env['EUREKASERVICE_URI_2'])
 class PeerAwareEurekaClusterIntegSpec extends Specification {
 
+    def "should get peers from env"() {
+        given:
+        def peer1 = System.getenv("EUREKASERVICE_URI_1")
+        def peer2 = System.getenv("EUREKASERVICE_URI_2")
+
+        expect:
+        peer1 == 'http://192.168.99.103:8761/eureka'
+        peer2 == 'http://192.168.99.103:8762/eureka'
+
+    }
+
     @Timeout(unit=TimeUnit.MINUTES, value=5)
     def "should create eureka cluster out of 2 peers"() {
         given:
@@ -23,8 +34,8 @@ class PeerAwareEurekaClusterIntegSpec extends Specification {
 
         peer1 = 'http://192.168.99.103:8761/eureka'
         peer2 = 'http://192.168.99.103:8762/eureka'
-        println "peer1: " + peer1
-        println "peer2: " + peer2
+//        println "peer1: " + peer1
+//        println "peer2: " + peer2
 
         expect:
         TimeUnit.SECONDS.sleep(60)
