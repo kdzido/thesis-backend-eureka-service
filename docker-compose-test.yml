@@ -19,14 +19,14 @@ services:
   eurekapeer1:
     image: thesis-eurekaservice:snapshot
     environment:
-      PROFILE: "peer1"
+      - PROFILE: peer1
     ports:
       - "8761:8761"
 
   eurekapeer2:
     image: thesis-eurekaservice:snapshot
     environment:
-      PROFILE: "peer2"
+      - PROFILE: "peer2"
     ports:
       - "8762:8761"
 
@@ -39,7 +39,7 @@ services:
       - .:/appsrc
       - ./rootGradle:/root/.gradle
     environment:
-      - EUREKASERVICE_URI_1=http://eurekapeer1:8761/eureka"
-      - EUREKASERVICE_URI_2=http://eurekapeer2:8761/eureka
+      - EUREKASERVICE_URI_1: http://eurekapeer1:8761/eureka"
+      - EUREKASERVICE_URI_2: http://eurekapeer2:8761/eureka
     working_dir: /appsrc
     command: bash -c "./gradlew integTest"
