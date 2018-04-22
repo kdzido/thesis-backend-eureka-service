@@ -1,6 +1,7 @@
 package com.kdzido.thesis.eureka
 
 import io.restassured.http.ContentType
+import spock.lang.Ignore
 import spock.lang.Requires
 import spock.lang.Specification
 import spock.lang.Timeout
@@ -15,6 +16,7 @@ import static org.hamcrest.Matchers.*
 //@Requires(env['EUREKASERVICE_URI_2'])
 class PeerAwareEurekaClusterIntegSpec extends Specification {
 
+    @Ignore
     def "should get peers from env"() {
         given:
         def peer1 = System.getenv("EUREKASERVICE_URI_1")
