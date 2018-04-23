@@ -22,19 +22,15 @@ class PeerAwareEurekaClusterIntegSpec extends Specification {
     @Unroll
     @Timeout(unit = TimeUnit.MINUTES, value = 5)
     def "should create eureka cluster out of peers: #peer1, #peer2"() {
-        given:
-//        def peer1 = System.getenv("EUREKASERVICE_URI_1")
-//        def peer2 = System.getenv("EUREKASERVICE_URI_2")
-
         expect:
         // TODO pass as quickly as possible
         // TODO pass as quickly as possible
         // TODO pass as quickly as possible
-        TimeUnit.SECONDS.sleep(90)
+//        TimeUnit.SECONDS.sleep(80)
 
         given().when()
                 .accept(ContentType.JSON)
-                .get("$peer1/apps")
+                .get("${peer1.trim()}/apps")
                 .then()
                 .statusCode(200)
                 .body("applications.application.name", hasItem("EUREKASERVICE"))
@@ -43,7 +39,7 @@ class PeerAwareEurekaClusterIntegSpec extends Specification {
         and:
         given().when()
                 .accept(ContentType.JSON)
-                .get("$peer2/apps")
+                .get("${peer2.trim()}/apps")
                 .then()
                 .statusCode(200)
                 .body("applications.application.name", hasItem("EUREKASERVICE"))
