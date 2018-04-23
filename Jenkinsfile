@@ -41,7 +41,16 @@ pipeline {
 
         stage("Prod-like") {
             steps {
-                print "TODO deploy to Prod-like env"
+                withEnv([
+                        "DOCKER_TLS_VERIFY=1",
+                        "DOCKER_HOST=tcp://${env.PROD_LIKE_IP}:2376",
+                        "DOCKER_CERT_PATH=/machines/${env.PROD_LIKE_NAME}"]) {
+                    sh "docker service update --image localhost:5000/thesis-eurekaservice:${env.BUILD_NUMBER} eurekapeer1"
+                    sh "docker service update --image localhost:5000/thesis-eurekaservice:${env.BUILD_NUMBER} eurekapeer2"
+                }
+                // TODO smoke test or rollback!!
+                // TODO smoke test or rollback!!
+                // TODO smoke test or rollback!!
             }
         }
         stage("Prod") {
