@@ -53,11 +53,11 @@ pipeline {
                 // TODO smoke test or rollback!!
             }
         }
-        stage("Prod") {
-            steps {
-                print "TODO deploy to Prod env"
-            }
-        }
+//        stage("Prod") {
+//            steps {
+//                print "TODO deploy to Prod env"
+//            }
+//        }
     }
 
     post {
