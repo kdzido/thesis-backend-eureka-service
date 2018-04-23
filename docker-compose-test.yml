@@ -21,14 +21,14 @@ services:
     environment:
       - PROFILE=peer1
     ports:
-      - "8761:8761"
+      - "8701:8761"
 
   eurekapeer2:
     image: thesis-eurekaservice:snapshot
     environment:
       - PROFILE=peer2
     ports:
-      - "8762:8761"
+      - "8702:8761"
 
   staging:
     image: openjdk:8u162-jdk
