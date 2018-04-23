@@ -26,7 +26,7 @@ class PeerAwareEurekaClusterIntegSpec extends Specification {
         // TODO pass as quickly as possible
         // TODO pass as quickly as possible
         // TODO pass as quickly as possible
-//        TimeUnit.SECONDS.sleep(80)
+        TimeUnit.SECONDS.sleep(80)
 
         given().when()
                 .accept(ContentType.JSON)
