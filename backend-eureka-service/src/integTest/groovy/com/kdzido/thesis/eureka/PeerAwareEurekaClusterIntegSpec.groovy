@@ -23,8 +23,8 @@ class PeerAwareEurekaClusterIntegSpec extends Specification {
     @Timeout(unit = TimeUnit.MINUTES, value = 5)
     def "should create eureka cluster out of peers: #peer1, #peer2"() {
         given:
-        def peer1 = System.getenv("EUREKASERVICE_URI_1")
-        def peer2 = System.getenv("EUREKASERVICE_URI_2")
+//        def peer1 = System.getenv("EUREKASERVICE_URI_1")
+//        def peer2 = System.getenv("EUREKASERVICE_URI_2")
 
         expect:
         // TODO pass as quickly as possible
