@@ -21,7 +21,7 @@ class PeerAwareEurekaClusterIntegSpec extends Specification {
 
     @Unroll
     @Timeout(unit = TimeUnit.MINUTES, value = 5)
-    def "should create eureka cluster out of peers: #peer1, #peer2"() {
+    def "that eureka peers are aware of each other: #peer1, #peer2"() {
         expect:
         // TODO pass as quickly as possible
         // TODO pass as quickly as possible
