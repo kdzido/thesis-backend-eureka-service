@@ -38,6 +38,13 @@ pipeline {
                 sh "docker push localhost:5000/thesis-eurekaservice:${env.BUILD_NUMBER}"
             }
         }
+
+        stage("Prod-like") {
+            print "TODO deploy to Prod-like env"
+        }
+        stage("Prod") {
+            print "TODO deploy to Prod env"
+        }
     }
 
     post {
