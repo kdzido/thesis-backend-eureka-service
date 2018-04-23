@@ -1,7 +1,6 @@
 package com.kdzido.thesis.eureka
 
 import io.restassured.http.ContentType
-import spock.lang.Ignore
 import spock.lang.Requires
 import spock.lang.Specification
 import spock.lang.Timeout
@@ -21,7 +20,7 @@ class PeerAwareEurekaClusterIntegSpec extends Specification {
 
     @Unroll
     @Timeout(unit = TimeUnit.MINUTES, value = 5)
-    def "that eureka peers are aware of each other: #peer1, #peer2"() {
+    def "that eureka peers are aware of each other: #peer1, #peer2"() { // readable fail
         expect:
         // TODO pass as quickly as possible
         // TODO pass as quickly as possible
@@ -45,10 +44,9 @@ class PeerAwareEurekaClusterIntegSpec extends Specification {
                 .body("applications.application.name", hasItem("EUREKASERVICE"))
                 .body("applications.application.instance.app", hasItems(["EUREKASERVICE", "EUREKASERVICE"]))
 
-        where: // for readable fail
+        where:
         peer1                                | peer2
         System.getenv("EUREKASERVICE_URI_1") | System.getenv("EUREKASERVICE_URI_2")
-
     }
 
 }
