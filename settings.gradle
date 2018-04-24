@@ -1,4 +1,3 @@
 rootProject.name = 'thesis-backend-eureka-service'
 
 include 'backend-eureka-service'
-
