@@ -54,11 +54,21 @@ pipeline {
                 // TODO smoke test or rollback!!
             }
         }
-//        stage("Prod") {
-//            steps {
-//                print "TODO deploy to Prod env"
-//            }
-//        }
+        stage("Prod") {
+            steps {
+                withEnv([
+                        "DOCKER_TLS_VERIFY=1",
+                        "DOCKER_HOST=tcp://${env.PROD_IP}:2376",
+                        "DOCKER_CERT_PATH=/machines/${env.PROD_NAME}"]) {
+                    sh "docker service update --image localhost:5000/thesis-eurekaservice:${env.BUILD_NUMBER} eurekapeer1"
+                    sleep 50    // zero-down time deployment
+                    sh "docker service update --image localhost:5000/thesis-eurekaservice:${env.BUILD_NUMBER} eurekapeer2"
+                }
+                // TODO smoke test or rollback!!
+                // TODO smoke test or rollback!!
+                // TODO smoke test or rollback!!
+            }
+        }
     }
 
     post {
