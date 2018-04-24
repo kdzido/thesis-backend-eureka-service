@@ -73,6 +73,7 @@ dependencies {
     integTestCompile "org.codehaus.groovy:groovy-all:${groovyVersion}"
     integTestCompile "org.spockframework:spock-core:${spockVersion}"
     integTestCompile "io.rest-assured:rest-assured:${restAssuredVersion}"
+    integTestCompile "org.awaitility:awaitility-groovy:${awaitilityVersion}"
 
 }
 
@@ -83,7 +84,8 @@ task integTest(type: Test) {
     group = 'verification'
 }
 
-integTest.mustRunAfter test
+// TODO uncomment?
+//integTest.mustRunAfter test
 
 //task createBuildInfoFile << {
 //    def buildInfo = new File("$buildDir/build-info.properties")

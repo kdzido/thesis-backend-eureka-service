@@ -2,6 +2,7 @@
 allprojects {
     ext {
         restAssuredVersion = '3.1.0'
+        awaitilityVersion = '3.1.0'
         groovyVersion = '2.4.13'
         cucumberVersion = '2.0.1'
         groovyVersion = '2.4.7'
