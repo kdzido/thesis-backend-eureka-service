@@ -1,18 +1,14 @@
 package com.kdzido.thesis.eureka
 
+import io.restassured.RestAssured
 import io.restassured.http.ContentType
-import spock.lang.Ignore
 import spock.lang.Requires
 import spock.lang.Specification
 import spock.lang.Stepwise
-import spock.lang.Timeout
 import spock.lang.Unroll
 
 import java.util.concurrent.TimeUnit
 
-import static io.restassured.RestAssured.*
-import static io.restassured.matcher.RestAssuredMatchers.*
-import static org.hamcrest.Matchers.*
 import static org.awaitility.Awaitility.*
 
 /**
@@ -23,55 +19,30 @@ import static org.awaitility.Awaitility.*
 class PeerAwareEurekaClusterIntegSpec extends Specification {
 
     @Unroll
-    @Timeout(unit = TimeUnit.MINUTES, value = 4)
     def "that eureka peers are up: #peer1, #peer2"() { // readable fail
         expect:
-            await().atMost(2, TimeUnit.MINUTES).until({ is200(peer1) })
-            await().atMost(2, TimeUnit.MINUTES).until({ is200(peer2) })
+        await().atMost(2, TimeUnit.MINUTES).until({ is200(peer1) })
+        await().atMost(2, TimeUnit.MINUTES).until({ is200(peer2) })
 
         where:
         peer1                                | peer2
         System.getenv("EUREKASERVICE_URI_1") | System.getenv("EUREKASERVICE_URI_2")
     }
 
-
-    @Ignore
     @Unroll
-    @Timeout(unit = TimeUnit.MINUTES, value = 5)
     def "that eureka peers are aware of each other: #peer1, #peer2"() { // readable fail
         expect:
-        // TODO pass as quickly as possible
-        // TODO pass as quickly as possible
-        // TODO pass as quickly as possible
-        TimeUnit.SECONDS.sleep(80)
-
-        given()
-                .when()
-                .accept(ContentType.JSON)
-                .get("${peer1.trim()}/apps")
-                .then()
-                .statusCode(200)
-                .body("applications.application.name", hasItem("EUREKASERVICE"))
-                .body("applications.application.instance.app", hasItems(["EUREKASERVICE", "EUREKASERVICE"]))
-
-        and:
-        given()
-                .when()
-                .accept(ContentType.JSON)
-                .get("${peer2.trim()}/apps")
-                .then()
-                .statusCode(200)
-                .body("applications.application.name", hasItem("EUREKASERVICE"))
-                .body("applications.application.instance.app", hasItems(["EUREKASERVICE", "EUREKASERVICE"]))
-
+        await().atMost(3, TimeUnit.MINUTES).until({ isEurekaRegisteredInCluster(peer1) })
+        await().atMost(3, TimeUnit.MINUTES).until({ isEurekaRegisteredInCluster(peer2) })
 
         where:
         peer1                                | peer2
         System.getenv("EUREKASERVICE_URI_1") | System.getenv("EUREKASERVICE_URI_2")
     }
 
-    static getRegisteredApps(eurekaBaseUri) {
-        def response = when()
+    static getEurekaApps(eurekaBaseUri) {
+        def response = RestAssured.given().when()
+                .accept(ContentType.JSON)
                 .get("$eurekaBaseUri/apps")
                 .then()
                 .extract().response()
@@ -79,23 +50,23 @@ class PeerAwareEurekaClusterIntegSpec extends Specification {
     }
 
     static is200(eurekaBaseUri) {
-        def response
         try {
-            response = getRegisteredApps(eurekaBaseUri)
+            def response = getEurekaApps(eurekaBaseUri)
             return response.statusCode() == 200
-        } catch (ignore) {
+        } catch (e) {
             return false
         }
-        return false
     }
 
-    static isServiceRegistered(eurekaBaseUri) {
-        when()
-                .get("$eurekaBaseUri/apps")
-                .then()
-        .statusCode(200)
-                .body("applications.application.name", hasItem("EUREKASERVICE"))
-                .body("applications.application.instance.app", hasItems(["EUREKASERVICE", "EUREKASERVICE"]))
+    static isEurekaRegisteredInCluster(eurekaBaseUri) {
+        try {
+            def response = getEurekaApps(eurekaBaseUri)
+            return response.statusCode() == 200 &&
+                   response.body().jsonPath().get("applications.application.name") == ["EUREKASERVICE"] &&
+                   response.body().jsonPath().get("applications.application.instance.app") ==  [["EUREKASERVICE", "EUREKASERVICE"]]
+        } catch (e) {
+            return false
+        }
     }
 
 }
