@@ -16,6 +16,7 @@ services:
     image: thesis-eurekaservice:snapshot
 
 # Staging
+# TODO make hostnames (eurekapeer1, eurekapeer2) parametrizable
   eurekapeer1:
     image: thesis-eurekaservice:snapshot
     environment:
