@@ -16,7 +16,7 @@ import static org.awaitility.Awaitility.*
  */
 @Requires({ env['EUREKASERVICE_URI_1'] && env['EUREKASERVICE_URI_2'] })
 @Stepwise
-class PeerAwareEurekaClusterIntegSpec extends Specification {
+class EurekaClusterIntegSpec extends Specification {
 
     @Unroll
     def "that eureka peers are up: #peer1, #peer2"() { // readable fail
