@@ -43,7 +43,7 @@ class PeerAwareEurekaClusterIntegSpec extends Specification {
         // TODO pass as quickly as possible
         // TODO pass as quickly as possible
         // TODO pass as quickly as possible
-//        TimeUnit.SECONDS.sleep(80)
+        TimeUnit.SECONDS.sleep(80)
 
         given()
                 .when()
@@ -79,10 +79,15 @@ class PeerAwareEurekaClusterIntegSpec extends Specification {
     }
 
     static is200(eurekaBaseUri) {
-        def response = getRegisteredApps(eurekaBaseUri)
-        return response.statusCode() == 200
+        def response
+        try {
+            response = getRegisteredApps(eurekaBaseUri)
+            return response.statusCode() == 200
+        } catch (ignore) {
+            return false
+        }
+        return false
     }
-
 
     static isServiceRegistered(eurekaBaseUri) {
         when()
@@ -92,7 +97,5 @@ class PeerAwareEurekaClusterIntegSpec extends Specification {
                 .body("applications.application.name", hasItem("EUREKASERVICE"))
                 .body("applications.application.instance.app", hasItems(["EUREKASERVICE", "EUREKASERVICE"]))
     }
-
-
 
 }
