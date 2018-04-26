@@ -14,7 +14,7 @@ import static org.awaitility.Awaitility.*
 /**
  * @author krzysztof.dzido@gmail.com
  */
-@Requires({ env['EUREKASERVICE_URI_1'] && env['EUREKASERVICE_URI_2'] })
+//@Requires({ env['EUREKASERVICE_URI_1'] && env['EUREKASERVICE_URI_2'] })
 @Stepwise
 class EurekaClusterIntegSpec extends Specification {
 

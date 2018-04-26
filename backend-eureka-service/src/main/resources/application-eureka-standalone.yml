@@ -1,8 +1,5 @@
 server.port: 8761
 
-# TODO remove
-management.security.enabled: false
-
 # standalone mode
 eureka:
 #  instance:
