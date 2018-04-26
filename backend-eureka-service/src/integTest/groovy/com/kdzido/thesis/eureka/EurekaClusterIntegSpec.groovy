@@ -2,7 +2,6 @@ package com.kdzido.thesis.eureka
 
 import io.restassured.RestAssured
 import io.restassured.http.ContentType
-import spock.lang.Requires
 import spock.lang.Specification
 import spock.lang.Stepwise
 import spock.lang.Unroll
@@ -32,8 +31,8 @@ class EurekaClusterIntegSpec extends Specification {
     @Unroll
     def "that eureka peers are aware of each other: #peer1, #peer2"() { // readable fail
         expect:
-        await().atMost(3, TimeUnit.MINUTES).until({ isEurekaRegisteredInCluster(peer1) })
-        await().atMost(3, TimeUnit.MINUTES).until({ isEurekaRegisteredInCluster(peer2) })
+        await().atMost(3, TimeUnit.MINUTES).until({ isEurekaRegistered(peer1) })
+        await().atMost(3, TimeUnit.MINUTES).until({ isEurekaRegistered(peer2) })
 
         where:
         peer1                                | peer2
@@ -58,12 +57,13 @@ class EurekaClusterIntegSpec extends Specification {
         }
     }
 
-    static isEurekaRegisteredInCluster(eurekaBaseUri) {
+    static isEurekaRegistered(eurekaBaseUri) {
         try {
             def response = getEurekaApps(eurekaBaseUri)
+            // TODO use containsAll
             return response.statusCode() == 200 &&
-                   response.body().jsonPath().get("applications.application.name") == ["EUREKASERVICE"] &&
-                   response.body().jsonPath().get("applications.application.instance.app") ==  [["EUREKASERVICE", "EUREKASERVICE"]]
+                    response.body().jsonPath().get("applications.application.name").contains("EUREKASERVICE") &&
+                    response.body().jsonPath().get("applications.application.instance.app") == [["EUREKASERVICE", "EUREKASERVICE"]]
         } catch (e) {
             return false
         }
