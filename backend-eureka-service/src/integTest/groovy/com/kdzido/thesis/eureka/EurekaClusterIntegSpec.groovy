@@ -1,6 +1,7 @@
 package com.kdzido.thesis.eureka
 
 import groovyx.net.http.RESTClient
+import org.springframework.http.MediaType
 import spock.lang.Specification
 import spock.lang.Stepwise
 
@@ -18,11 +19,11 @@ class EurekaClusterIntegSpec extends Specification {
     final static EUREKASERVICE_URI_2 = System.getenv("EUREKASERVICE_URI_2")
 
     def eurekapeer1Client = new RESTClient("$EUREKASERVICE_URI_1").with {
-        setHeaders(Accept: 'application/json')
+        setHeaders(Accept: MediaType.APPLICATION_JSON_VALUE)
         it
     }
     def eurekapeer2Client = new RESTClient("$EUREKASERVICE_URI_2").with {
-        setHeaders(Accept: 'application/json')
+        setHeaders(Accept: MediaType.APPLICATION_JSON_VALUE)
         it
     }
 
@@ -46,7 +47,6 @@ class EurekaClusterIntegSpec extends Specification {
                 return false
             }
         })
-
     }
 
     def "that eureka is registered in Eureka peers"() {
@@ -55,7 +55,7 @@ class EurekaClusterIntegSpec extends Specification {
             try {
                 def resp = eurekapeer1Client.get(path: "/eureka/apps")
                 resp.status == 200 &&
-                        resp.headers.'Content-Type' == "application/json" &&
+                        resp.headers.'Content-Type'.contains(MediaType.APPLICATION_JSON_VALUE) &&
                         resp.data.applications.application.any {
                             it.name == "EUREKASERVICE" &&
                                     it.instance.findAll { it.app == "EUREKASERVICE" }.size() == 2
@@ -70,7 +70,7 @@ class EurekaClusterIntegSpec extends Specification {
             try {
                 def resp = eurekapeer2Client.get(path: "/eureka/apps")
                 resp.status == 200 &&
-                        resp.headers.'Content-Type' == "application/json" &&
+                        resp.headers.'Content-Type'.contains(MediaType.APPLICATION_JSON_VALUE) &&
                         resp.data.applications.application.any {
                             it.name == "EUREKASERVICE" &&
                                     it.instance.findAll { it.app == "EUREKASERVICE" }.size() == 2
