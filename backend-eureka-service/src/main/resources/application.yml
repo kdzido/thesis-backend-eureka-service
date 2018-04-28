@@ -12,9 +12,6 @@ eureka:
     preferIpAddress: true
   server:
     waitTimeInMsWhenSyncEmpty: 0
-  client:
-    serviceUrl:
-      defaultZone: http://eurekapeer1:8761/eureka/,http://eurekapeer2:8761/eureka/
 
 ---
 # cluster mode
@@ -22,8 +19,12 @@ spring:
   profiles: peer1
 eureka:
   instance:
+      # TODO hostName?
     hostname: eurekapeer1
 #    ip-address: $$DOCKER_IP
+  client:
+    serviceUrl:
+      defaultZone: http://eurekapeer1:8761/eureka/,http://eurekapeer2:8761/eureka/
 
 ---
 # cluster mode
@@ -31,8 +32,12 @@ spring:
   profiles: peer2
 eureka:
   instance:
+    # TODO hostName?
     hostname: eurekapeer2
 #    ip-address: $$DOCKER_IP
+  client:
+    serviceUrl:
+      defaultZone: http://eurekapeer1:8761/eureka/,http://eurekapeer2:8761/eureka/
 
 #---
 ## standalone mode
