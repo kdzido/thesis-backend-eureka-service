@@ -3,7 +3,6 @@ package com.kdzido.thesis.eureka
 import groovyx.net.http.RESTClient
 import spock.lang.Specification
 import spock.lang.Stepwise
-import spock.lang.Unroll
 
 import java.util.concurrent.TimeUnit
 
@@ -27,8 +26,7 @@ class EurekaClusterIntegSpec extends Specification {
         it
     }
 
-    @Unroll
-    def "that eureka peers are up: #peer1, #peer2"() { // readable fail
+    def "that eureka peers are up"() {
         expect:
         await().atMost(2, TimeUnit.MINUTES).until({
             try {
@@ -49,12 +47,9 @@ class EurekaClusterIntegSpec extends Specification {
             }
         })
 
-        where:
-        peer1                                | peer2
-        System.getenv("EUREKASERVICE_URI_1") | System.getenv("EUREKASERVICE_URI_2")
     }
 
-    def "that eureka is registered in Eureka peers"() { // readable fail
+    def "that eureka is registered in Eureka peers"() {
         expect:
         await().atMost(2, TimeUnit.MINUTES).until({
             try {
