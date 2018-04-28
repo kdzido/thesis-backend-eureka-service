@@ -12,9 +12,9 @@ eureka:
     preferIpAddress: true
   server:
     waitTimeInMsWhenSyncEmpty: 0
-#  client:
-#    serviceUrl:
-#      defaultZone: http://eurekapeer1:8761/eureka/,http://eurekapeer2:8761/eureka/
+  client:
+    serviceUrl:
+      defaultZone: http://eurekapeer1:8761/eureka/,http://eurekapeer2:8761/eureka/
 
 ---
 # cluster mode
@@ -25,9 +25,6 @@ eureka:
       # TODO hostName?
     hostname: eurekapeer1
 #    ip-address: $$DOCKER_IP
-  client:
-    serviceUrl:
-      defaultZone: http://eurekapeer2:8761/eureka/
 
 ---
 # cluster mode
@@ -38,22 +35,19 @@ eureka:
     # TODO hostName?
     hostname: eurekapeer2
 #    ip-address: $$DOCKER_IP
-  client:
-    serviceUrl:
-      defaultZone: http://eurekapeer1:8761/eureka/
 
-#---
-## standalone mode
-#spring:
-#  profiles: standalone
-#eureka:
-##  instance:
-##    hostname: localhost
-##    preferIpAddress: true
-#  client:
-#    registerWithEureka: false
-#    fetchRegistry: false
-#    serviceUrl:
-#      defaultZone: http://localhost:8761
-#  server:
-#    waitTimeInMsWhenSyncEmpty: 0
+---
+# standalone mode
+spring:
+  profiles: standalone
+eureka:
+#  instance:
+#    hostname: localhost
+#    preferIpAddress: true
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://localhost:8761
+  server:
+    waitTimeInMsWhenSyncEmpty: 0
