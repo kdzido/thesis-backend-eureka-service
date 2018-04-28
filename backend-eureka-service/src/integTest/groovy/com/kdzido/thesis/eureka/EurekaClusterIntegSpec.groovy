@@ -1,7 +1,6 @@
 package com.kdzido.thesis.eureka
 
-import io.restassured.RestAssured
-import io.restassured.http.ContentType
+import groovyx.net.http.RESTClient
 import spock.lang.Specification
 import spock.lang.Stepwise
 import spock.lang.Unroll
@@ -13,60 +12,78 @@ import static org.awaitility.Awaitility.*
 /**
  * @author krzysztof.dzido@gmail.com
  */
-//@Requires({ env['EUREKASERVICE_URI_1'] && env['EUREKASERVICE_URI_2'] })
 @Stepwise
 class EurekaClusterIntegSpec extends Specification {
+
+    final static EUREKASERVICE_URI_1 = System.getenv("EUREKASERVICE_URI_1")
+    final static EUREKASERVICE_URI_2 = System.getenv("EUREKASERVICE_URI_2")
+
+    def eurekapeer1Client = new RESTClient("$EUREKASERVICE_URI_1").with {
+        setHeaders(Accept: 'application/json')
+        it
+    }
+    def eurekapeer2Client = new RESTClient("$EUREKASERVICE_URI_2").with {
+        setHeaders(Accept: 'application/json')
+        it
+    }
 
     @Unroll
     def "that eureka peers are up: #peer1, #peer2"() { // readable fail
         expect:
-        await().atMost(2, TimeUnit.MINUTES).until({ is200(peer1) })
-        await().atMost(2, TimeUnit.MINUTES).until({ is200(peer2) })
+        await().atMost(2, TimeUnit.MINUTES).until({
+            try {
+                def resp = eurekapeer1Client.get(path: "/eureka/apps")
+                resp.status == 200
+            } catch (e) {
+                return false
+            }
+        })
+
+        and:
+        await().atMost(2, TimeUnit.MINUTES).until({
+            try {
+                def resp = eurekapeer2Client.get(path: "/eureka/apps")
+                resp.status == 200
+            } catch (e) {
+                return false
+            }
+        })
 
         where:
         peer1                                | peer2
         System.getenv("EUREKASERVICE_URI_1") | System.getenv("EUREKASERVICE_URI_2")
     }
 
-    @Unroll
-    def "that eureka peers are aware of each other: #peer1, #peer2"() { // readable fail
+    def "that eureka is registered in Eureka peers"() { // readable fail
         expect:
-        await().atMost(3, TimeUnit.MINUTES).until({ isEurekaRegistered(peer1) })
-        await().atMost(3, TimeUnit.MINUTES).until({ isEurekaRegistered(peer2) })
+        await().atMost(2, TimeUnit.MINUTES).until({
+            try {
+                def resp = eurekapeer1Client.get(path: "/eureka/apps")
+                resp.status == 200 &&
+                        resp.headers.'Content-Type' == "application/json" &&
+                        resp.data.applications.application.any {
+                            it.name == "EUREKASERVICE" &&
+                                    it.instance.findAll { it.app == "EUREKASERVICE" }.size() == 2
+                        }
+            } catch (e) {
+                return false
+            }
+        })
 
-        where:
-        peer1                                | peer2
-        System.getenv("EUREKASERVICE_URI_1") | System.getenv("EUREKASERVICE_URI_2")
-    }
-
-    static getEurekaApps(eurekaBaseUri) {
-        def response = RestAssured.given().when()
-                .accept(ContentType.JSON)
-                .get("$eurekaBaseUri/apps")
-                .then()
-                .extract().response()
-        return response
-    }
-
-    static is200(eurekaBaseUri) {
-        try {
-            def response = getEurekaApps(eurekaBaseUri)
-            return response.statusCode() == 200
-        } catch (e) {
-            return false
-        }
-    }
-
-    static isEurekaRegistered(eurekaBaseUri) {
-        try {
-            def response = getEurekaApps(eurekaBaseUri)
-            // TODO use containsAll
-            return response.statusCode() == 200 &&
-                    response.body().jsonPath().get("applications.application.name").contains("EUREKASERVICE") &&
-                    response.body().jsonPath().get("applications.application.instance.app") == [["EUREKASERVICE", "EUREKASERVICE"]]
-        } catch (e) {
-            return false
-        }
+        and:
+        await().atMost(2, TimeUnit.MINUTES).until({
+            try {
+                def resp = eurekapeer2Client.get(path: "/eureka/apps")
+                resp.status == 200 &&
+                        resp.headers.'Content-Type' == "application/json" &&
+                        resp.data.applications.application.any {
+                            it.name == "EUREKASERVICE" &&
+                                    it.instance.findAll { it.app == "EUREKASERVICE" }.size() == 2
+                        }
+            } catch (e) {
+                return false
+            }
+        })
     }
 
 }
