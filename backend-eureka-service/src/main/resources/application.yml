@@ -12,6 +12,9 @@ eureka:
     preferIpAddress: true
   server:
     waitTimeInMsWhenSyncEmpty: 0
+#  client:
+#    serviceUrl:
+#      defaultZone: http://eurekapeer1:8761/eureka/,http://eurekapeer2:8761/eureka/
 
 ---
 # cluster mode
@@ -24,7 +27,7 @@ eureka:
 #    ip-address: $$DOCKER_IP
   client:
     serviceUrl:
-      defaultZone: http://eurekapeer1:8761/eureka/,http://eurekapeer2:8761/eureka/
+      defaultZone: http://eurekapeer2:8761/eureka/
 
 ---
 # cluster mode
@@ -37,7 +40,7 @@ eureka:
 #    ip-address: $$DOCKER_IP
   client:
     serviceUrl:
-      defaultZone: http://eurekapeer1:8761/eureka/,http://eurekapeer2:8761/eureka/
+      defaultZone: http://eurekapeer1:8761/eureka/
 
 #---
 ## standalone mode
