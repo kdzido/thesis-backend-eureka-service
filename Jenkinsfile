@@ -1,6 +1,12 @@
+// Declarative Continuous Deployment Pipeline
+
+
 pipeline {
     agent {
         node { label 'docker-enabled' }
+    }
+    options {
+        timestamps()
     }
 
     environment {
