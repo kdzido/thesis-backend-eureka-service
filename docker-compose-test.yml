@@ -34,9 +34,9 @@ services:
       - "7762:8761"
 
   staging:
-#    image: openjdk:8u162-jdk
+    image: openjdk:8u162-jdk
     image: fabric8/java-jboss-openjdk8-jdk:1.4.0
-#    mem_limit: 1570m  # jboss jdk allocates 1/2 to max heap size
+    mem_limit: 1570m  # jvm allocates 1/4 to max heap size
     depends_on:
       - eurekapeer1
       - eurekapeer2
@@ -46,5 +46,6 @@ services:
     environment:
       - EUREKASERVICE_URI_1=http://eurekapeer1:8761
       - EUREKASERVICE_URI_2=http://eurekapeer2:8761
+      - GRADLE_OPTS="-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
     working_dir: /appsrc
     command: bash -c "ping -c 1 eurekapeer1 && ping -c 1 eurekapeer2 && ./gradlew integTest --no-daemon"
