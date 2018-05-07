@@ -4,10 +4,13 @@ services:
 # Commit
   unit:
     image: openjdk:8u162-jdk
+    mem_limit: 1570m  # jvm allocates 1/4 to max heap size
     volumes:
       - .:/appsrc
       - ./rootGradle:/root/.gradle
     working_dir: /appsrc
+    environment:
+      JAVA_OPTS: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
     command: bash -c "./gradlew clean build copyDockerFiles --no-daemon"
 
   app:
@@ -35,7 +38,6 @@ services:
 
   staging:
     image: openjdk:8u162-jdk
-    image: fabric8/java-jboss-openjdk8-jdk:1.4.0
     mem_limit: 1570m  # jvm allocates 1/4 to max heap size
     depends_on:
       - eurekapeer1
@@ -46,6 +48,6 @@ services:
     environment:
       EUREKASERVICE_URI_1: "http://eurekapeer1:8761"
       EUREKASERVICE_URI_2: "http://eurekapeer2:8761"
-      JAVA_OPTS: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
+      JAVA_OPTS: "-XX:+PrintFlagsFinal -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
     working_dir: /appsrc
     command: bash -c "ping -c 1 eurekapeer1 && ping -c 1 eurekapeer2 && ./gradlew integTest --no-daemon"
