@@ -29,7 +29,7 @@ class EurekaClusterIntegSpec extends Specification {
 
     def "that eureka peers are up"() {
         expect:
-        await().atMost(2, TimeUnit.MINUTES).until({
+        await().atMost(2, TimeUnit.MINUTES).pollInterval(1, TimeUnit.SECONDS).until({
             try {
                 def resp = eurekapeer1Client.get(path: "/eureka/apps")
                 resp.status == 200
@@ -39,7 +39,7 @@ class EurekaClusterIntegSpec extends Specification {
         })
 
         and:
-        await().atMost(2, TimeUnit.MINUTES).until({
+        await().atMost(2, TimeUnit.MINUTES).pollInterval(1, TimeUnit.SECONDS).until({
             try {
                 def resp = eurekapeer2Client.get(path: "/eureka/apps")
                 resp.status == 200
@@ -51,7 +51,7 @@ class EurekaClusterIntegSpec extends Specification {
 
     def "that eureka is registered in Eureka peers"() {
         expect:
-        await().atMost(2, TimeUnit.MINUTES).until({
+        await().atMost(2, TimeUnit.MINUTES).pollInterval(1, TimeUnit.SECONDS).until({
             try {
                 def resp = eurekapeer1Client.get(path: "/eureka/apps")
                 resp.status == 200 &&
@@ -66,7 +66,7 @@ class EurekaClusterIntegSpec extends Specification {
         })
 
         and:
-        await().atMost(2, TimeUnit.MINUTES).until({
+        await().atMost(2, TimeUnit.MINUTES).pollInterval(1, TimeUnit.SECONDS).until({
             try {
                 def resp = eurekapeer2Client.get(path: "/eureka/apps")
                 resp.status == 200 &&

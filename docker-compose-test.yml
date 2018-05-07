@@ -10,7 +10,7 @@ services:
       - ./rootGradle:/root/.gradle
     working_dir: /appsrc
     environment:
-      JAVA_OPTS: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
+      JAVA_OPTS: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"  # optional as of JDK10
     command: bash -c "./gradlew clean build copyDockerFiles --no-daemon"
 
   app:
@@ -48,6 +48,6 @@ services:
     environment:
       EUREKASERVICE_URI_1: "http://eurekapeer1:8761"
       EUREKASERVICE_URI_2: "http://eurekapeer2:8761"
-      JAVA_OPTS: "-XX:+PrintFlagsFinal -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
+      JAVA_OPTS: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"  # optional as of JDK10
     working_dir: /appsrc
     command: bash -c "ping -c 1 eurekapeer1 && ping -c 1 eurekapeer2 && ./gradlew integTest --no-daemon"
