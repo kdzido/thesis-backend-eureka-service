@@ -8,7 +8,7 @@ services:
       - .:/appsrc
       - ./rootGradle:/root/.gradle
     working_dir: /appsrc
-    command: bash -c "./gradlew clean build copyDockerFiles"
+    command: bash -c "./gradlew clean build copyDockerFiles --no-daemon"
 
   app:
     build:
@@ -19,7 +19,7 @@ services:
 # TODO make hostnames (eurekapeer1, eurekapeer2) parametrizable
   eurekapeer1:
     image: thesis-eurekaservice:snapshot
-    mem_limit: 500m
+    mem_limit: 400m
     environment:
       - PROFILE=peer1
     ports:
@@ -27,14 +27,16 @@ services:
 
   eurekapeer2:
     image: thesis-eurekaservice:snapshot
-    mem_limit: 500m
+    mem_limit: 400m
     environment:
       - PROFILE=peer2
     ports:
       - "7762:8761"
 
   staging:
-    image: openjdk:8u162-jdk
+#    image: openjdk:8u162-jdk
+    image: fabric8/java-jboss-openjdk8-jdk:1.4.0
+    mem_limit: 1570m
     depends_on:
       - eurekapeer1
       - eurekapeer2
@@ -45,4 +47,4 @@ services:
       - EUREKASERVICE_URI_1=http://eurekapeer1:8761
       - EUREKASERVICE_URI_2=http://eurekapeer2:8761
     working_dir: /appsrc
-    command: bash -c "ping -c 1 eurekapeer1 && ping -c 1 eurekapeer2 && ./gradlew integTest"
+    command: bash -c "ping -c 1 eurekapeer1 && ping -c 1 eurekapeer2 && ./gradlew integTest --no-daemon"
