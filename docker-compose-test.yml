@@ -19,7 +19,7 @@ services:
 # TODO make hostnames (eurekapeer1, eurekapeer2) parametrizable
   eurekapeer1:
     image: thesis-eurekaservice:snapshot
-    mem_limit: 800m   # jvm allocates 1/4 to max heap size
+    mem_limit: 500m   # jvm allocates 1/4 to max heap size
     environment:
       - PROFILE=peer1
     ports:
@@ -27,15 +27,15 @@ services:
 
   eurekapeer2:
     image: thesis-eurekaservice:snapshot
-    mem_limit: 400m   # jvm allocates 1/4 to max heap size
+    mem_limit: 500m   # jvm allocates 1/4 to max heap size
     environment:
       - PROFILE=peer2
     ports:
       - "7762:8761"
 
   staging:
-    image: openjdk:8u162-jdk
-#    image: fabric8/java-jboss-openjdk8-jdk:1.4.0
+#    image: openjdk:8u162-jdk
+    image: fabric8/java-jboss-openjdk8-jdk:1.4.0
 #    mem_limit: 1570m  # jboss jdk allocates 1/2 to max heap size
     depends_on:
       - eurekapeer1
