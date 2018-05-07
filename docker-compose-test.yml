@@ -44,8 +44,8 @@ services:
       - .:/appsrc
       - ./rootGradle:/root/.gradle
     environment:
-      - EUREKASERVICE_URI_1: "http://eurekapeer1:8761"
-      - EUREKASERVICE_URI_2: "http://eurekapeer2:8761"
-      - JAVA_OPTS: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
+      EUREKASERVICE_URI_1: "http://eurekapeer1:8761"
+      EUREKASERVICE_URI_2: "http://eurekapeer2:8761"
+      JAVA_OPTS: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
     working_dir: /appsrc
     command: bash -c "ping -c 1 eurekapeer1 && ping -c 1 eurekapeer2 && ./gradlew integTest --no-daemon"
