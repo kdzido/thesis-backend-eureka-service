@@ -35,7 +35,11 @@ pipeline {
                 }
             }
         }
-
+        stage('Acceptance') {
+            steps {
+                echo "Acceptance Stage"
+            }
+        }
         stage("Publish") { // Local Docker registry
             steps {
                 sh "docker tag thesis-eurekaservice:snapshot localhost:5000/thesis-eurekaservice"
